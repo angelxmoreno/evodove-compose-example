@@ -1,0 +1,33 @@
+version: '2'
+services:
+  node:
+    container_name: ${APP_PREFIX}-node
+    image: node:16.8-alpine3.14
+    command: yarn start:web
+    working_dir: /app
+    volumes:
+      - ../:/app
+    ports:
+      - ${WEB_PORT}:${WEB_PORT}
+    links:
+      - consumer
+  consumer:
+    container_name: ${APP_PREFIX}-consumer
+    image: node:16.8-alpine3.14
+    command: yarn start:consumer
+    working_dir: /app
+    volumes:
+      - ../:/app
+    links:
+      - evodove
+  evodove:
+    container_name: ${APP_PREFIX}-evodove
+    env_file:
+      - ../.env
+    build:
+      context: ./evodove
+    restart: on-failure
+    ports:
+      - ${EVODOVE_SERVER_PORT}:${EVODOVE_SERVER_PORT}
+    volumes:
+      - ./data/evodove:/app/data:delegated

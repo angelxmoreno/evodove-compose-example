@@ -1,12 +1,14 @@
 {
   "name": "evodove-compose-example",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "web.js",
   "repository": "git@github.com:angelxmoreno/evodove-compose-example.git",
   "author": "Angel S. Moreno <angelxmoreno@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node src/index.js"
+    "start:web": "node src/web.js",
+    "start:consumer": "node src/consumer.js",
+    "docker:up": "docker-compose --env-file .env --file ./docker/docker-compose.yml up"
   },
   "dependencies": {
     "dotenv": "^10.0.0",
